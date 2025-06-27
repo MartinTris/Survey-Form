@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Survey Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        form {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h2 {
+            color: #333333;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        fieldset {
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+        }
+
+        legend {
+            font-weight: bold;
+            color: #555555;
+            padding: 0 10px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        select,
+        textarea {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="radio"],
+        input[type="checkbox"] {
+            margin-right: 8px;
+            margin-bottom: 10px;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        .center-buttons {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        input[type="submit"],
+        input[type="reset"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 0 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="reset"] {
+            background-color: #f44336;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        input[type="reset"]:hover {
+            background-color: #da190b;
+        }
+    </style>
+</head>
+<body>
+    <form id="googleForm">
+        <fieldset>
+            <legend>Personal Information</legend>
+            Name: <input type="text" name="name" required><br><br>
+            Email: <input type="email" name="email"><br><br>
+            Age: <input type="number" name="age" min="10" max="100"><br><br>
+        </fieldset>
+
+        <fieldset>
+            <legend>Service Rating</legend>
+            How satisfied are you with our service?<br>
+            <input type="radio" name="rating" value="very_satisfied"> Very Satisfied<br>
+            <input type="radio" name="rating" value="satisfied"> Satisfied<br>
+            <input type="radio" name="rating" value="neutral"> Neutral<br>
+            <input type="radio" name="rating" value="dissatisfied"> Dissatisfied<br><br>
+
+            What features do you use? (Check all that apply):<br>
+            <input type="checkbox" name="feature[]" value="chat"> Live Chat<br>
+            <input type="checkbox" name="feature[]" value="support"> Email Support<br>
+            <input type="checkbox" name="feature[]" value="faq"> FAQs<br><br>
+
+            Preferred Contact Method:
+            <select name="contact_method">
+                <option value="">--Please choose--</option>
+                <option value="email">Email</option>
+                <option value="phone">Phone</option>
+                <option value="chat">Live Chat</option>
+            </select><br><br>
+        </fieldset>
+
+        <fieldset>
+            <legend>Additional Feedback</legend>
+            Comments:<br>
+            <textarea name="comments" rows="5" cols="40" placeholder="Tell us how we can improve..."></textarea><br><br>
+        </fieldset>
+
+        <div class="center-buttons">
+            <input type="reset" value="Reset Form">
+            <input type="submit" value="Submit Survey">
+        </div>
+    </form>
+
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyTeD3tENO2BjORgBSDGC1EgM-s87P8NnIZvhUwlXhwGecAOugMcTE8NMqPSnuLBNAB/exec';
+        const form = document.getElementById('googleForm');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+
+            fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+                .then(response => {
+                    alert("Form submitted successfully!");
+                    form.reset();
+                })
+                .catch(error => alert('Error!', error.message));
+        });
+    </script>
+</body>
+</html>
